@@ -82,6 +82,7 @@ WSGI_APPLICATION = 'portfolios.wsgi.application'
 
 CORS_ALLOWED_ORIGINS = [
     'http://localhost:3000',
+    'https://gunilla-arno-toll.herokuapp.com/',
 ]
 
 # Database
