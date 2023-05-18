@@ -28,8 +28,8 @@ class Page(models.Model):
     navigation_order = models.PositiveSmallIntegerField(unique=True, blank=True, null=True)
     page_type = models.ForeignKey(Page_type, on_delete=models.SET_NULL, null=True, to_field="page_type")
     text = models.TextField(blank=True, default="")
-    banner = models.ForeignKey(Banner, on_delete=models.SET_NULL, blank=True, null=True, to_field="image")
-    page_img = models.ImageField(upload_to="img", blank=True)
+    banner = models.URLField(max_length=500, blank=True, null=True)
+    page_img = models.URLField(max_length=500, blank=True, null=True)
 
 
     def __str__(self):
@@ -48,7 +48,7 @@ class Category(models.Model):
 
 class Artwork(models.Model):
     title = models.CharField(blank=True, max_length=200)
-    image = models.ImageField(upload_to="artworks")
+    image = models.URLField(max_length=500, blank=True, null=True)
     category = models.ManyToManyField(Category)
     artist = models.ForeignKey(User, on_delete=models.CASCADE)
     year = models.PositiveSmallIntegerField()
