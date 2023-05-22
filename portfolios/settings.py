@@ -87,6 +87,7 @@ app_orgins = [
 
 CORS_ALLOWED_ORIGINS = app_orgins
 CORS_ALLOW_CREDENTIALS = True
+CORS_EXPOSE_HEADERS = "Set-Cookie"
 
 # if IS_HEROKU:
 #     CSRF_COOKIE_DOMAIN = 'gunilla-arno-toll-server.herokuapp.com'
