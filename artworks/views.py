@@ -80,9 +80,9 @@ def login(request):
 
         if user is not None:
             response = JsonResponse({ "success": { "name": getattr(user, "first_name"), "email": getattr(user, "email") } })
-            auth_login(request, user)
-            get_token(request)
-            response.set_cookie("Test", "Please work", samesite="None", secure=True, httponly=False, domain="gunilla-arno-toll.herokuapp.com")
+            # auth_login(request, user)
+            # get_token(request)
+            response.set_cookie("Test", "Please work", samesite="None", secure=True, httponly=False)
             return response
         else:
             return JsonResponse({ "error": error}, status=401)
