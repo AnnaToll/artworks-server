@@ -2,6 +2,11 @@ from django.shortcuts import render
 from django.http import HttpResponse, JsonResponse
 from django.core import serializers
 from django.forms.models import model_to_dict
+from django.contrib.auth import authenticate, login as auth_login, logout as auth_logout
+from django.views.decorators.csrf import csrf_exempt
+from django.middleware.csrf import get_token
+import json
+
 
 from .models import User, Category, Artwork, Page
 
@@ -44,3 +49,40 @@ def art(request, category_id):
     category = Category.objects.get(id=category_id)
     art = Artwork.objects.filter(category=category)
     return JsonResponse(to_response_list(art))
+
+
+def check_authentication(request):
+    is_authenticated = request.user.is_authenticated
+    return JsonResponse({ "success": { "isAuthenticated": is_authenticated }})
+
+
+# @csrf_exempt
+def logout(request):
+    auth_logout(request)
+    return JsonResponse({ "success": "You have successfully been logged out."})
+
+
+@csrf_exempt
+def login(request):
+    if request.method == "POST":
+        req = json.loads(request.body)
+        error = ""
+        email = req["email"]
+        password = req["pwd"]
+        email_exists = User.objects.filter(email=email).exists()
+        user = None
+        if not email_exists:
+            error = "Email is not registered."
+        else:
+            user = authenticate(request, username=email, password=password)
+            if user is None:
+                error = "Email and password does not match."
+
+        if user is not None:
+            response = JsonResponse({ "success": { "name": getattr(user, "first_name"), "email": getattr(user, "email") } })
+            auth_login(request, user)
+            get_token(request)
+            # response.set_cookie("Test", "Please work", samesite="None", secure=True, httponly=True)
+            return response
+        else:
+            return JsonResponse({ "error": error}, status=401)

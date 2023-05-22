@@ -80,10 +80,26 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'portfolios.wsgi.application'
 
-CORS_ALLOWED_ORIGINS = [
+app_orgins = [
     'http://localhost:3000',
-    'https://gunilla-arno-toll.herokuapp.com/',
+    'https://gunilla-arno-toll.herokuapp.com',
 ]
+
+CORS_ALLOWED_ORIGINS = app_orgins
+CORS_ALLOW_CREDENTIALS = True
+
+CSRF_TRUSTED_ORIGINS = app_orgins
+CSRF_COOKIE_SAMESITE = "None"
+CSRF_COOKIE_SECURE = True
+# CSRF_COOKIE_HTTPONLY = True
+
+SESSION_ENGINE = "django.contrib.sessions.backends.signed_cookies"
+
+SESSION_COOKIE_SAMESITE = "None"
+SESSION_COOKIE_SECURE = True
+SESSION_COOKIE_HTTPONLY = True
+
+
 
 # Database
 # https://docs.djangoproject.com/en/4.1/ref/settings/#databases
