@@ -82,7 +82,7 @@ def login(request):
             response = JsonResponse({ "success": { "name": getattr(user, "first_name"), "email": getattr(user, "email") } })
             # auth_login(request, user)
             # get_token(request)
-            response.set_cookie("Test", "Please work", samesite="None", secure=True, httponly=False)
+            response.set_cookie("Test", "Please work", httponly=False)
             return response
         else:
             return JsonResponse({ "error": error}, status=401)
