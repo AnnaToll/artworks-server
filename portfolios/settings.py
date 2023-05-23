@@ -84,6 +84,8 @@ app_orgins = [
     'http://localhost:3000',
     'https://www.gunilla-arno-toll.se',
     'https://gunilla-arno-toll.se',
+    'http://www.gunilla-arno-toll.se',
+    'http://gunilla-arno-toll.se',
 ]
 
 CORS_ALLOWED_ORIGINS = app_orgins
