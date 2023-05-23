@@ -90,20 +90,22 @@ app_orgins = [
 
 CORS_ALLOWED_ORIGINS = app_orgins
 CORS_ALLOW_CREDENTIALS = True
-CORS_EXPOSE_HEADERS = ["Set-Cookie", "Cookie"]
+# CORS_EXPOSE_HEADERS = ["Set-Cookie", "Cookie"]
 
-# if IS_HEROKU:
-#     CSRF_COOKIE_DOMAIN = '.gunilla-arno-toll.se'
+if IS_HEROKU:
+    CSRF_COOKIE_DOMAIN = "api.gunilla-arno-toll.se"
 
 CSRF_TRUSTED_ORIGINS = app_orgins
 # CSRF_COOKIE_SAMESITE = "None"
 # CSRF_COOKIE_SECURE = True
 # CSRF_COOKIE_HTTPONLY = True
 
-SESSION_ENGINE = "django.contrib.sessions.backends.signed_cookies"
+# SESSION_ENGINE = "django.contrib.sessions.backends.signed_cookies"
 
-# if IS_HEROKU:
-#     SESSION_COOKIE_DOMAIN = '.gunilla-arno-toll.se'
+CSRF_USE_SESSIONS = True
+
+if IS_HEROKU:
+    SESSION_COOKIE_DOMAIN = "api.gunilla-arno-toll.se"
 
 # SESSION_COOKIE_SAMESITE = "None"
 # SESSION_COOKIE_SECURE = True
