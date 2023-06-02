@@ -55,9 +55,9 @@ def home(request):
 
 
 # @csrf_exempt
-@login_required
+# @login_required
 def nav(request):
-    if request.method == "PUT":
+    if request.method == "PUT" and request.user.is_authenticated:
         req = json.loads(request.body)
         all_nav_items = req["all"]
 
