@@ -99,9 +99,13 @@ CORS_ALLOW_HEADERS = (
     "user-agent",
     "x-csrftoken",
     "x-requested-with",
+    "credentials",
+    "Cookie",
+    "Set-Cookie",
     "Access-Control-Allow-Credentials",
+
 )
-CORS_EXPOSE_HEADERS = ["Access-Control-Allow-Credentials"]
+CORS_EXPOSE_HEADERS = ["Access-Control-Allow-Credentials", "Cookie", "Set-Cookie"]
 
 if IS_HEROKU:
     CSRF_COOKIE_DOMAIN = "api.gunilla-arno-toll.se"
