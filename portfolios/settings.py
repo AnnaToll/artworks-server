@@ -111,10 +111,6 @@ if IS_HEROKU:
     CSRF_COOKIE_DOMAIN = "api.gunilla-arno-toll.se"
 
 CSRF_TRUSTED_ORIGINS = app_orgins
-CSRF_USE_SESSIONS = True
-
-# if IS_HEROKU:
-#     SESSION_COOKIE_DOMAIN = ".gunilla-arno-toll.se"
 
 SESSION_COOKIE_HTTPONLY = True
 

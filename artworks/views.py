@@ -1,8 +1,6 @@
-from django.shortcuts import render
-from django.http import HttpResponse, JsonResponse
-from django.core import serializers
+from django.http import JsonResponse
 from django.contrib.auth.decorators import login_required
-from django.forms.models import model_to_dict
+from django.views.decorators.csrf import requires_csrf_token
 from django.contrib.auth import authenticate, login as auth_login, logout as auth_logout
 from django.views.decorators.csrf import csrf_exempt
 from django.middleware.csrf import get_token
@@ -400,6 +398,7 @@ def logout(request):
 
 
 @csrf_exempt
+@requires_csrf_token
 def login(request):
     if request.method == "POST":
         req = json.loads(request.body)
