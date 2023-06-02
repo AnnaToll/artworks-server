@@ -83,6 +83,7 @@ def nav(request):
 
         return JsonResponse({ "success": "Navigation has been updated"})
 
+    logger.info(request.COOKIES)
     page = Page.objects.filter(navigation_order__gt=0).values()
     category = Category.objects.filter(navigation_order__gt=0).values()
     nav = list(page) + list(category)
@@ -388,7 +389,7 @@ def art(request, category_id):
 # @login_required
 def check_authentication(request):
     is_authenticated = request.user.is_authenticated
-    return JsonResponse({ "success": { "isAuthenticated": is_authenticated, "cookies": request.cookies }})
+    return JsonResponse({ "success": { "isAuthenticated": is_authenticated, "cookies": request.COOKIES }})
 
 
 @csrf_exempt
