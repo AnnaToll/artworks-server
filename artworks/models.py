@@ -23,6 +23,14 @@ class Banner(models.Model):
         return f"Banner: {self.image}"
     
 
+class Image(models.Model):
+    url = models.URLField(max_length=500)
+    public_id = models.CharField(max_length=50)
+
+    def __str__(self):
+        return f"Public_id: {self.public_id}"    
+    
+
 class Page(models.Model):
     page = models.CharField(max_length=30)
     navigation_order = models.PositiveSmallIntegerField(unique=True, blank=True, null=True)
@@ -41,6 +49,7 @@ class Category(models.Model):
     page = models.ManyToManyField(Page, blank=True)
     navigation_order = models.PositiveSmallIntegerField(unique=True, blank=True, null=True)
     priority = models.PositiveSmallIntegerField(blank=True, null=True)
+    text = models.TextField(blank=True, default="")
 
     def __str__(self):
         return f"Category: {self.category}"
@@ -49,10 +58,10 @@ class Category(models.Model):
 class Artwork(models.Model):
     title = models.CharField(blank=True, max_length=200)
     image = models.URLField(max_length=500, blank=True, null=True)
-    category = models.ManyToManyField(Category)
-    artist = models.ForeignKey(User, on_delete=models.CASCADE)
+    category = models.ManyToManyField(Category, blank=True)
+    artist = models.ForeignKey(User, on_delete=models.CASCADE, blank=True)
     year = models.PositiveSmallIntegerField()
 
     def __str__(self):
-        return f"Artwork: {self.title}, year: {self.year}, by: {self.artist}"
+        return f"Artwork: {self.title}, year: {self.year}"
     

@@ -38,6 +38,7 @@ else:
 
 # Application definition
 
+
 INSTALLED_APPS = [
     'artworks',
     'corsheaders',
@@ -86,29 +87,22 @@ app_orgins = [
     'https://gunilla-arno-toll.se',
     'http://www.gunilla-arno-toll.se',
     'http://gunilla-arno-toll.se',
+    'http://api.gunilla-arno-toll.se',
 ]
 
 CORS_ALLOWED_ORIGINS = app_orgins
 CORS_ALLOW_CREDENTIALS = True
-# CORS_EXPOSE_HEADERS = ["Set-Cookie", "Cookie"]
+CORS_EXPOSE_HEADERS = ["Set-Cookie", "Cookie"]
 
 if IS_HEROKU:
     CSRF_COOKIE_DOMAIN = "api.gunilla-arno-toll.se"
 
 CSRF_TRUSTED_ORIGINS = app_orgins
-# CSRF_COOKIE_SAMESITE = "None"
-# CSRF_COOKIE_SECURE = True
-# CSRF_COOKIE_HTTPONLY = True
-
-# SESSION_ENGINE = "django.contrib.sessions.backends.signed_cookies"
-
 CSRF_USE_SESSIONS = True
 
 if IS_HEROKU:
     SESSION_COOKIE_DOMAIN = "api.gunilla-arno-toll.se"
 
-# SESSION_COOKIE_SAMESITE = "None"
-# SESSION_COOKIE_SECURE = True
 SESSION_COOKIE_HTTPONLY = True
 
 
@@ -179,3 +173,26 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media/')
 
 MEDIA_URL = '/media/'
+
+LOGGING = {
+    'version': 1,
+    'disable_existing_loggers': False,
+    'filters': {
+        'require_debug_true': {
+            '()': 'django.utils.log.RequireDebugTrue',
+        },
+    },
+    'handlers': {
+        'console': {
+            'class': 'logging.StreamHandler',
+            'filters': ['require_debug_true'],
+        },
+    },
+    'loggers': {
+        'mylogger': {
+            'handlers': ['console'],
+            'level': os.getenv('DJANGO_LOG_LEVEL', 'INFO'),
+            'propagate': True,
+        },
+    },
+}
