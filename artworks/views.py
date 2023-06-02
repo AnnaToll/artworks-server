@@ -418,7 +418,7 @@ def login(request):
         if user is not None:
             auth_login(request, user)
             response = JsonResponse({ "success": { "name": getattr(user, "first_name"), "email": getattr(user, "email") } })
-            # response.set_cookie("Test", "Please work", httponly=False, domain="api.gunilla-arno-toll.se")
+            response.set_cookie("Test", "Please work", httponly=True)
             return response
         else:
             return JsonResponse({ "error": error}, status=401)

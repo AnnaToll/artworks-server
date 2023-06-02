@@ -82,9 +82,9 @@ TEMPLATES = [
 WSGI_APPLICATION = 'portfolios.wsgi.application'
 
 app_orgins = [
+    # 'https://www.gunilla-arno-toll.se',
+    # 'https://gunilla-arno-toll.se',
     'http://localhost:3000',
-    'https://www.gunilla-arno-toll.se',
-    'https://gunilla-arno-toll.se',
     'http://www.gunilla-arno-toll.se',
     'http://gunilla-arno-toll.se',
     'http://api.gunilla-arno-toll.se',
@@ -92,7 +92,16 @@ app_orgins = [
 
 CORS_ALLOWED_ORIGINS = app_orgins
 CORS_ALLOW_CREDENTIALS = True
-CORS_EXPOSE_HEADERS = ["Set-Cookie", "Cookie"]
+CORS_ALLOW_HEADERS = (
+    "accept",
+    "authorization",
+    "content-type",
+    "user-agent",
+    "x-csrftoken",
+    "x-requested-with",
+    "Access-Control-Allow-Credentials",
+)
+CORS_EXPOSE_HEADERS = ["Access-Control-Allow-Credentials"]
 
 if IS_HEROKU:
     CSRF_COOKIE_DOMAIN = "api.gunilla-arno-toll.se"
