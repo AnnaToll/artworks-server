@@ -120,8 +120,12 @@ SESSION_COOKIE_HTTPONLY = True
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'railway',
+        'USER': 'postgres',
+        'PASSWORD': 'NL5Rs4RX8aphuIB9PfSe',
+        'HOST': 'containers-us-west-188.railway.app',
+        'PORT': '6363',
     }
 }
 
