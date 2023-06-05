@@ -38,11 +38,6 @@ def sort_after_priority():
             category.save()
 
 
-def artist_as_json(request):
-    artist = User.models.find(User=request.user)
-    return JsonResponse({ "artist": artist })
-
-
 def to_response_list(query_set):
     return { "success": list(query_set.values()) }
 
@@ -92,10 +87,6 @@ def nav(request):
     return JsonResponse({ "success": sorted_nav })
 
 
-def about(request):
-    return artist_as_json(request)
-
-
 # @csrf_exempt
 @login_required
 def images(request):
@@ -107,10 +98,6 @@ def images(request):
         )
         new_image.save()
         return JsonResponse({ "success": "Image has been added"})
-
-
-def contact(request):
-    return artist_as_json(request)
     
 
 def all(request):
@@ -204,7 +191,7 @@ def artworks(request):
 @login_required
 def artwork(request, art_id):
 
-    user = User.objects.get(id=1)
+    user = request.user
 
     if request.method == "POST" or request.method == "PUT":
         req = json.loads(request.body)
@@ -395,7 +382,7 @@ def check_authentication(request):
 
 
 # @csrf_exempt
-@login_required
+# @login_required
 def logout(request):
     auth_logout(request)
     return JsonResponse({ "success": "You have successfully been logged out."})
