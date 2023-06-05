@@ -382,8 +382,8 @@ def check_authentication(request):
     return JsonResponse({ "success": { "isAuthenticated": is_authenticated }})
 
 
-# @csrf_exempt
 # @login_required
+@csrf_exempt
 def logout(request):
     auth_logout(request)
     return JsonResponse({ "success": "You have successfully been logged out."})
