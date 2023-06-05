@@ -376,6 +376,7 @@ def art(request, category_id):
     return JsonResponse(to_response_list(art))
 
 
+@csrf_exempt
 def check_authentication(request):
     is_authenticated = request.user.is_authenticated
     return JsonResponse({ "success": { "isAuthenticated": is_authenticated }})
