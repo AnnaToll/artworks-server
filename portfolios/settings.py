@@ -103,9 +103,10 @@ CORS_ALLOW_HEADERS = (
     "Cookie",
     "Set-Cookie",
     "Access-Control-Allow-Credentials",
+    "Access-Control-Allow-Origin",
 
 )
-CORS_EXPOSE_HEADERS = ["Access-Control-Allow-Credentials", "Cookie", "Set-Cookie"]
+CORS_EXPOSE_HEADERS = ["Access-Control-Allow-Credentials", "Access-Control-Allow-Origin", "Cookie", "Set-Cookie"]
 
 CSRF_COOKIE_DOMAIN = "gunilla-arno-toll.se"
 
