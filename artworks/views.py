@@ -52,12 +52,15 @@ def home(request):
     return JsonResponse({ "success": categories })
 
 
-# @csrf_exempt
 # @login_required
+# @csrf_exempt
 def nav(request):
-    if request.method == "PUT" and request.user.is_authenticated:
+    if request.method == "PUT":
+        if not request.user.is_authenticated:
+            return JsonResponse({ "error": "You do not have permission to update the navigation"}, status=403)
         req = json.loads(request.body)
         all_nav_items = req["all"]
+        logger.info(req)
 
         for item in all_nav_items:
             current = None
@@ -269,6 +272,8 @@ def page(request, page_id):
         page_img = req["pageImg"]
         category_priority = req["categoryPriority"]
 
+        logger.info(req)
+
         if len(page) < 3:
             return JsonResponse({ "error": "Page name must have at least two characters"}, status=400)
         
@@ -384,14 +389,13 @@ def art(request, category_id):
     return JsonResponse(to_response_list(art))
 
 
-# @login_required
 def check_authentication(request):
     is_authenticated = request.user.is_authenticated
-    return JsonResponse({ "success": { "isAuthenticated": is_authenticated, "cookies": request.COOKIES }})
+    return JsonResponse({ "success": { "isAuthenticated": is_authenticated }})
 
 
-@csrf_exempt
-# @login_required
+# @csrf_exempt
+@login_required
 def logout(request):
     auth_logout(request)
     return JsonResponse({ "success": "You have successfully been logged out."})
@@ -417,7 +421,6 @@ def login(request):
         if user is not None:
             auth_login(request, user)
             response = JsonResponse({ "success": { "name": getattr(user, "first_name"), "email": getattr(user, "email") } })
-            response.set_cookie("Test", "Please work", httponly=True, samesite="None", secure=True)
             return response
         else:
             return JsonResponse({ "error": error}, status=401)
