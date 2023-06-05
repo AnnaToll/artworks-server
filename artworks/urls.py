@@ -4,8 +4,6 @@ from . import views
 
 urlpatterns = [
     path("home", views.home),
-    path("om-mig", views.about),
-    path("kontakt", views.contact),
     path("categories", views.categories),
     path("images", views.images),
     path("category/<str:category_id>", views.category),
