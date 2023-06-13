@@ -3,7 +3,6 @@ from django.db import models
 
 
 class User(AbstractUser):
-    image = models.ImageField(upload_to="other", blank=True)
 
     def __str__(self):
         return f"User: {self.username}"
@@ -14,13 +13,6 @@ class Page_type(models.Model):
 
     def __str__(self):
         return f"Page type: {self.page_type}"
-    
-
-class Banner(models.Model):
-    image = models.ImageField(upload_to="img", unique=True)
-
-    def __str__(self):
-        return f"Banner: {self.image}"
     
 
 class Image(models.Model):

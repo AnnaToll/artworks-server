@@ -9,12 +9,11 @@
     <script src="https://unpkg.com/react@18/umd/react.development.js" crossorigin></script>
     <script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js" crossorigin></script>
     <script src="https://unpkg.com/@babel/standalone/babel.min.js" crossorigin></script>
-    <script type="text/babel" data-type="module" data-presets="react" src="{% static 'artworks/components/art/test.js' %}"></script>
-    <script type="text/babel" data-type="module" data-presets="react" src="{% static 'artworks/app.js' %}"></script>
-    <title>Artworks</title>
+    <script type="text/babel" data-type="module" data-presets="react" defer src="{% static 'artworks/app.js' %}"></script>
+    <link href="{% static 'artworks/styles.css' %}" rel="stylesheet">
+    <title>About</title>
 </head>
 <body>
     <div id="root"></div>
-    <h1>Hola</h1>
 </body>
 </html>

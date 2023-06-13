@@ -21,16 +21,12 @@ environ.Env.read_env()
 BASE_DIR = Path(__file__).resolve().parent.parent
 
 IS_HEROKU = "DYNO" in os.environ
-# Quick-start development settings - unsuitable for production
-# See https://docs.djangoproject.com/en/4.1/howto/deployment/checklist/
 
-# SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-@y!3g#y*h3-$0skg-s#c_6ouqkc@e441%-0zvb)&a!o4y0%%0b'
+SECRET_KEY = env('SECRET_KEY')
 
 if 'SECRET_KEY' in os.environ:
     SECRET_KEY = os.environ["SECRET_KEY"]
 
-# SECURITY WARNING: don't run with debug turned on in production!
 if not IS_HEROKU:
     DEBUG = True
 
@@ -85,16 +81,14 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'portfolios.wsgi.application'
 
-app_orgins = [
-    # 'https://www.gunilla-arno-toll.se',
-    # 'https://gunilla-arno-toll.se',
+app_origins = [
     'http://localhost:3000',
     'http://www.gunilla-arno-toll.se',
     'http://gunilla-arno-toll.se',
     'http://api.gunilla-arno-toll.se',
 ]
 
-CORS_ALLOWED_ORIGINS = app_orgins
+CORS_ALLOWED_ORIGINS = app_origins
 CORS_ALLOW_CREDENTIALS = True
 CORS_ALLOW_HEADERS = (
     "accept",
@@ -113,10 +107,9 @@ CORS_EXPOSE_HEADERS = ["Access-Control-Allow-Credentials", "Cookie", "Set-Cookie
 
 CSRF_COOKIE_DOMAIN = "gunilla-arno-toll.se"
 
-CSRF_TRUSTED_ORIGINS = app_orgins
+CSRF_TRUSTED_ORIGINS = app_origins
 
 SESSION_COOKIE_HTTPONLY = True
-
 
 
 # Database
@@ -173,22 +166,12 @@ USE_TZ = True
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.1/howto/static-files/
 
-# STATIC_URL = 'static/'
-
 STATIC_URL = '/static/'
-STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
-# STATICFILES_DIRS = [
-#     BASE_DIR / 'static'
-# ]
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.1/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
-
-MEDIA_ROOT = os.path.join(BASE_DIR, 'media/')
-
-MEDIA_URL = '/media/'
 
 LOGGING = {
     'version': 1,

@@ -1,9 +1,9 @@
 from django.http import JsonResponse
+from django.shortcuts import render
 from django.contrib.auth.decorators import login_required
 from django.views.decorators.csrf import requires_csrf_token
 from django.contrib.auth import authenticate, login as auth_login, logout as auth_logout
 from django.views.decorators.csrf import csrf_exempt
-from django.middleware.csrf import get_token
 import json
 import logging
 
@@ -11,13 +11,16 @@ logger = logging.getLogger("mylogger")
 
 from .models import User, Category, Artwork, Page, Page_type, Image
 
+def about(request):
+    return render(request, "artworks/index.html")
+
+
 def sort_after_navigation_order():
     categories = list(Category.objects.all().values())
     pages = list(Page.objects.all().values())
     all = categories + pages
     new_all = sorted(all, key=lambda d: (d["navigation_order"] or len(all) + 2))
     for index, item in enumerate(new_all):
-        logger.info(item)
         if item["navigation_order"] and "banner" in item:
             page = Page.objects.get(id=item["id"])
             page.navigation_order = index + 1
@@ -47,15 +50,12 @@ def home(request):
     return JsonResponse({ "success": categories })
 
 
-# @login_required
-# @csrf_exempt
 def nav(request):
     if request.method == "PUT":
         if not request.user.is_authenticated:
             return JsonResponse({ "error": "You do not have permission to update the navigation"}, status=403)
         req = json.loads(request.body)
         all_nav_items = req["all"]
-        logger.info(req)
 
         for item in all_nav_items:
             current = None
@@ -79,7 +79,6 @@ def nav(request):
 
         return JsonResponse({ "success": "Navigation has been updated"})
 
-    logger.info(request.COOKIES)
     page = Page.objects.filter(navigation_order__gt=0).values()
     category = Category.objects.filter(navigation_order__gt=0).values()
     nav = list(page) + list(category)
@@ -87,7 +86,6 @@ def nav(request):
     return JsonResponse({ "success": sorted_nav })
 
 
-# @csrf_exempt
 @login_required
 def images(request):
     if request.method == "POST":
@@ -158,9 +156,6 @@ def all(request):
     return JsonResponse({ "success": all_dict })
 
 
-
-
-# @csrf_exempt
 @login_required
 def pages(request):
     if request.method == "DELETE":
@@ -174,7 +169,6 @@ def pages(request):
         return JsonResponse(to_response_list(pages))
     
 
-# @csrf_exempt
 @login_required
 def artworks(request):
     if request.method == "DELETE":
@@ -187,7 +181,6 @@ def artworks(request):
         return JsonResponse(to_response_list(art))
 
 
-# @csrf_exempt
 @login_required
 def artwork(request, art_id):
 
@@ -219,7 +212,6 @@ def artwork(request, art_id):
                 artist = user
             )
             new_artwork.save()
-
             
         if request.method == "PUT":
             new_artwork = Artwork.objects.get(id=art_id)
@@ -246,7 +238,6 @@ def artwork(request, art_id):
         return JsonResponse({ "success": "Artwork has been deleted"})
     
 
-# @csrf_exempt
 @login_required
 def page(request, page_id):
 
@@ -258,8 +249,6 @@ def page(request, page_id):
         banner = req["banner"]
         page_img = req["pageImg"]
         category_priority = req["categoryPriority"]
-
-        logger.info(req)
 
         if len(page) < 3:
             return JsonResponse({ "error": "Page name must have at least two characters"}, status=400)
@@ -321,7 +310,6 @@ def categories(request):
         return JsonResponse(to_response_list(categories))
 
 
-# @csrf_exempt
 @login_required
 def category(request, category_id):
 
