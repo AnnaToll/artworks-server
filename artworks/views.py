@@ -7,7 +7,7 @@ from django.views.decorators.csrf import csrf_exempt
 import json
 import logging
 
-# Change for demo purpose
+# Change for demo purposes
 
 logger = logging.getLogger("mylogger")
 
