@@ -83,7 +83,7 @@ const App = () => {
     return (
         <main>
             <section id="about-container">
-                <h1>Fully functional backend</h1>
+                <h1>Fully functional backend for CMS</h1>
                 <p id="intro">REST API, security, PostgreSQL, CI/CD-Pipeline, etc.</p>
                 <About />
                 <Links />
