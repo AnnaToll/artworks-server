@@ -7,6 +7,8 @@ from django.views.decorators.csrf import csrf_exempt
 import json
 import logging
 
+# Change for demo purpose
+
 logger = logging.getLogger("mylogger")
 
 from .models import User, Category, Artwork, Page, Page_type, Image
