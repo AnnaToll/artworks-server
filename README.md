@@ -1,26 +1,28 @@
 # A fully functional Backend
 
-A fully working backend functioning as a REST API, with Djangos own Sessions and CSRF-protection tweaked to work with an external frontend-application. It is hosted on Heroku with HostUp as Domain registar. Github actions is used to create a CI/CD-pipeline, and it uses a PostreSQL database hosted on Railway.
+A fully working backend for a CMS (content management system) functioning as a REST API, with Djangos own Sessions and CSRF-protection tweaked to work with an external frontend-application. It is hosted on Heroku with HostUp as Domain registar. Github actions is used to create a CI/CD-pipeline, and it uses a PostreSQL database hosted on Railway.
 
 ## Distinctiveness and Complexity
 
-With the goal of making something different and more complex than previous projects, I chose to make a backend application that is a part of a larger project. I wanted to make something real. To take that final step, remove the training wheels, and create an application with proper security, hosted in the cloud and with a real domain. When coming across different web applications, I have often found that the frontend is separate from one or more backends. So in the spirit of creating something "real" as well as something complex and difficult, I set out on the journey to make my very own and fully functional backend application. I also added a index.html file, some Javascript, React and CSS to make sure to fulfill the requirements for passing this assignment. This single view is responsive with the help of media queries and flexbox, and looks nice and offers great functionality on both laptops and mobile devices.
+With the goal of making something different and more complex than previous projects, I chose to make a backend application for a CMS, that is part of a larger project. I wanted to make something real. To take that final step, remove the training wheels, and create an application with proper security, hosted in the cloud and with a real domain. When coming across different web applications, I have often found that the frontend is separate from one or more backends. So in the spirit of creating something "real" as well as something complex and difficult, I set out on the journey to make my very own and fully functional backend application communcicating with a separate frontend. I also added a index.html file, some Javascript, React and CSS to make sure to fulfill the requirements for passing this assignment. This single view is responsive with the help of media queries and flexbox, and looks nice and offers great functionality on both laptops and mobile devices.
 
 The project communicates with a frontend application by my own design, built with React and Typescript. I realize however that you can not take the frontend into consideration when grading the project. I will leave a link to the frontend repo and app all the same, in case you are curious.
 
-To make CSRF-protection, User permissions, authorization and Session work properly I have had to go through Djangos entire documentation regarding these subjects. This was not enough though. I still didn't get it to work, so I have also read all I could find on MDN web docs on cookies, headers, CORS, and request/response objects. After three days of headches and frustration I finally got it to work properly.
+Some of the most complex problems I had to solve was to make CSRF-protection, User permissions, authorization and Sessions work properly. The default settings are set up to work together with server-side rendering, so as expected, nothing worked when I first started connecting the frontend with the backend. I started with going through Djangos entire documentation regarding these subjects, but after adjusting the settings it still didn't work, so I had to deep dive into all I could find on MDN web docs on cookies, headers, CORS, and request/response objects. After three days of headches, despair and frustrations I finally got it to work properly.
 
 The solution was to install django-cors-headers, give the user all necessary permissions, add the correct settings for CSRF and Sessions, allow credentials, defining allowed origins as well as the required Access-Control-Expose-Headers and Access-Control-Allow-Headers.
 
 Another aspects of adding complexity is that I use a PostreSQL-database hosted on Railway. The reason I didn't want to use the default database is to prevent accidental overrides as well as making the progress of deploying the project to Heroku easier and safer. To make this work I created a database on Railway, and configured "DATABASES" in settings.py with the required variables. To prevent sensitive information about the database from becoming public I have also installed django-environ so that I can use environmental variables in the project. They are stored locally in a .env file as well as on Heroku.
 
-I run the code in different environments, locally and in production. Since some settings should change depending on the environment I set some settings conditionally.
+I also run the code in different environments, locally and in production. Since some settings should change depending on the environment I set some settings conditionally.
 
-In views I return all bodies in the requests as JSON strings. The only exception is the index view that I return with the render function. In working with JSON strings I came across the challenge of first having to turn all data from Django Query sets (with foriegn keys and many-to-many fields), to Python dicts or lists, and finally to JSON strings.
+In views, when it comes to distinctiveness, instead av returning render or redirect functions, I return almost all bodies in the response object as JSON strings. In working with JSON strings I came across the challenge of first having to turn all data from Django Query sets (with foriegn keys and many-to-many fields), to Python dicts or lists, and finally to JSON strings.
+
+To conclude this section I will specify some additional features that speaks to both the complexity and distinctinvess of the project.
 
 To make deploying to Heroku possible I installed Gunicorn with a Procfile that specifies how to start the application with Gunicorn, as well as a requirements.txt file.
 
-I also created a CI/CD-pipeline using Github actions to automatically deploy to Heroku on push to the main branch.
+I also created a CI/CD-pipeline using Github actions to automatically deploy to Heroku on push to the main branch. This makes the deployment both easy and fast.
 
 The final step towards creating my real, and fully functional backend was to connect it to a domain name. I use HostUp as a Domain registar, and connected it through a CNAME to Heroku.
 
@@ -103,7 +105,6 @@ In this file I have created some React components, pieced them together and rend
 
 ```
 python manage.py runserver
-
 ```
 
 
