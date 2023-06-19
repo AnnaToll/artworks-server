@@ -6,7 +6,12 @@ A fully working backend for a CMS (content management system) functioning as a R
 
 With the goal of making something different and more complex than previous projects, I chose to make a backend application for a CMS, that is part of a larger project. I wanted to make something real. To take that final step, remove the training wheels, and create an application with proper security, hosted in the cloud and with a real domain. When coming across different web applications, I have often found that the frontend is separate from one or more backends. So in the spirit of creating something "real" as well as something complex and difficult, I set out on the journey to make my very own and fully functional backend application communcicating with a separate frontend. I also added a index.html file, some Javascript, React and CSS to make sure to fulfill the requirements for passing this assignment. This single view is responsive with the help of media queries and flexbox, and looks nice and offers great functionality on both laptops and mobile devices.
 
-The project communicates with a frontend application by my own design, built with React and Typescript. I realize however that you can not take the frontend into consideration when grading the project. I will leave a link to the frontend repo and app all the same, in case you are curious.
+The project communicates with a frontend application by my own design, built with React and Typescript. I realize however that you can not take the frontend into consideration when grading the project. I will leave a link to the frontend and backend repo and app all the same, in case you are curious.
+
+[Frontend application](http://gunilla-arno-toll.se)  
+[Frontend repo](https://github.com/AnnaToll/artworks-app)  
+[Backend application](http://api.gunilla-arno-toll.se)  
+[Backend repo](https://github.com/AnnaToll/artworks-server)  
 
 Some of the most complex problems I had to solve was to make CSRF-protection, User permissions, authorization and Sessions work properly. The default settings are set up to work together with server-side rendering, so as expected, nothing worked when I first started connecting the frontend with the backend. I started with going through Djangos entire documentation regarding these subjects, but after adjusting the settings it still didn't work, so I had to deep dive into all I could find on MDN web docs on cookies, headers, CORS, and request/response objects. After three days of headches, despair and frustrations I finally got it to work properly.
 
@@ -69,13 +74,22 @@ This is where all settings for the Django project is configured.
 
 A file that tells git which files not to add when commiting. I have added ".env" in this file to prevent the sensitive environmental variables to be uploaded and exposed.
 
-### portfolios/.env
+### portfolios/.env and .env-demo
 
-Contains environmental variables for the secret key, as well as password, user and name for the database.
+Contains environmental variables for the secret key, as well as password, user and name for the database. .env is not added to github because it contain sensitive data, but I added a .env-demo file instead with the same variable names and dummy data for demonstration purposes.
 
 ### artworks/views.py
 
-Here you can find all my functions to handle requests and responses. 
+Here you can find all my functions to handle requests and responses. I have added functionality to get, add, update and delete artworks, categories and pages. There are also functions that handles sorting and saving the correct data for the navigation, and for the main content on the home page.
+
+When a page or artwork is deleted, the navigation and / or main content of the home page is sorted as well.
+
+This is also where I have written the logic for signing in and out as well as checking if the user is authenticated.
+
+The GET functions meant for public visitors has no decorators. All functions related to updating, deleting and adding content requires that the user is authenticated via the session cookie, has the proper permissions and that the request has a valid csrf-token added in the 'X-CSRFToken' header. The functions that handle login, logout and checks authentication do not need the user to be logged in, and have the decorator '@csrf_exempt' in place to ensure that this process works even though the cookies are cleared or the user logs in for the first time.
+
+Finally there are functions that saves urls to images uploaded in the frontend.
+
 
 ### artworks/urls.py
 
